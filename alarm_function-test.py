@@ -94,16 +94,17 @@ def set_alarm(user_override = None):
     year = int(first_event_time_wrong_format[0:4])
     month = int(first_event_time_wrong_format[5:7])
     day = int(first_event_time_wrong_format[8:10])
+    day = 17
     hour = (int(first_event_time_wrong_format[11:13]) - int(first_event_time_wrong_format[19:22])) % 24
+    hour = 15
     minute = int(first_event_time_wrong_format[14:16])
+    minute = 20
     second = int(first_event_time_wrong_format[17:19])
     first_event_time = datetime.datetime(year, month, day, hour, minute, second)
 
-    # TO REMOVE LATER
-    location = "395 Columbia Road Boston MA 02125"
     travel_time = calculate_time(first_event_time, location)
     prep_time = datetime.timedelta(minutes=travel_time + 30)
-    print(prep_time)
+    print(first_event_time - prep_time)
     return first_event_time - prep_time
     
 def calculate_time(first_event_time, location):
@@ -188,7 +189,7 @@ def main():
         print('No upcoming events found.')
     for event in events:
         start = event['start'].get('dateTime', event['start'].get('date'))
-        location = event['start'].get('location')
+        location = event['location']
         return (start, location)
 
 
@@ -197,5 +198,3 @@ if set_own_alarm == "y":
 	input("What time do you want to set? ")
 alarm_time = set_alarm()
 is_it_time(alarm_time, chose_alarm_type())
-
-	
